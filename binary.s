@@ -58,16 +58,18 @@ SAFEXT:
 # Binary search subroutine
 binarysearch:	
 	li $t3, 2; # Store 2 in $t3	
-	mul $a2, $t0, 4; # Offset in stack pointer from end of list to start (Counter*4)
+	mul $a2, $t0, 4; # Offset in stack pointer from end of list to start(Counter*4)<-ERRORHERE
 	sub $t2, $t7, $a2; # Left bound in $t2
 	sub $a3, $t7, $t2; # (Right - left) bound 
 	div $a3, $t3; # Divide (Right - left) by 2
 	mflo $v0 # Quotient to $v0 -> Is the offset to the mid value
-	add $t4, $t2, $a2; # (left+offset) => Pointer to mid value
+	move $t5, $v0; # Move offset to mid -> t5
+	add $t4, $t2, $t5; # (left+offset) => Pointer to mid value
+	
 	# Print midval (Just for testing for now)!
-		li 	$v0, 1		; # System call code 1 for print int
-		move $a0, $t4	 ; # Argument midval
-		syscall			; # Print the midval
+	#	li 	$v0, 1		; # System call code 1 for print int
+	#	lw $a0, ($t4)	 ; # Argument midval
+	#	syscall			; # Print the midval
 
 # Return to SEARCHVALIN where jal was called (This will be last command)	
 	jr $ra;
