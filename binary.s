@@ -1,3 +1,4 @@
+
 # Computer Systems and Architecture assignment 1
 
 ### Standard header information	
@@ -54,26 +55,25 @@ SAFEXT:
 	li 	$v0,10		; # System call code for exit
 	syscall			;
 
-# Read in digits to look for in the array
-
 # Binary search subroutine
-binarysearch:
+binarysearch:	
+	li $t3, 2; # Store 2 in $t3	
+	mul $a2, $t0, 4; # Offset in stack pointer from end of list to start (Counter*4)
+	sub $t2, $t7, $a2; # Left bound in $t2
+	sub $a3, $t7, $t2; # (Right - left) bound 
+	div $a3, $t3; # Divide (Right - left) by 2
+	mflo $v0 # Quotient to $v0 -> Is the offset to the mid value
+	add $t4, $t2, $a2; # (left+offset) => Pointer to mid value
+	# Print midval (Just for testing for now)!
+		li 	$v0, 1		; # System call code 1 for print int
+		move $a0, $t4	 ; # Argument midval
+		syscall			; # Print the midval
+
+# Return to SEARCHVALIN where jal was called (This will be last command)	
+	jr $ra;
+	
 # Print yes (Just for testing for now)!
 	li 	$v0,4		; # System call code 4 for print string
 	la 	$a0,yes		; # Argument string as input
 	syscall			; # Print the string
-# Return to SEARCHVALIN where jal was called
-	jr $ra;
-	
-# Iterate through array from end 
-	# Backtrack stack pointer by 4 bytes
-	# If 
-	
-
-	# Compare value in v0 with current  
-		# Set a value 0 or 1 in v1 for found or not found
-	# beq $v1, 1, PrintYES 	
-	# beq $v1, 0, PrintNO 
-	
-# Subroutine to print yes
 
